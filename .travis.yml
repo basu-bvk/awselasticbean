@@ -1,0 +1,9 @@
+sudo: required
+language: java
+install: true
+script: mvn clean package install -DskipTests=true
+services:
+  - docker
+addons:
+  artifacts: true
+    
