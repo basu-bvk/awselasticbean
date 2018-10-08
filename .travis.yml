@@ -4,6 +4,18 @@ install: true
 script: mvn clean package install -DskipTests=true
 services:
   - docker
-addons:
-  artifacts: true
-    
+after_deploy:
+  - echo "done deploying"
+
+
+deploy:
+  provider: elasticbeanstalk
+  access_key_id: $ACCESSKEYID
+  secret_access_key:
+    secure: "$SECRETACCESSKEY"
+  region: "us-west-2"  
+  app: "awsdocker"
+  env: "Awsdocker-env"
+  bucket_name: "elasticbeanstalk-us-west-2-882371129764"
+  on:
+    branch: master
