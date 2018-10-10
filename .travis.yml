@@ -8,17 +8,13 @@ after_deploy:
   - echo "done deploying"
   
 after_success:
-  - docker --version  # document the version travis is using
-  - pip install --user awscli # install aws cli w/o sudo
-  - pip install --upgrade awscli
-  - export PATH=$PATH:$HOME/.local/bin # put aws in the path
+  - apk add --no-cache curl jq python py-pip
+  - pip install awscli
   - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
   - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
   - aws configure set default.region us-west-2
-  - aws configure set metadata_service_timeout 1200
-  - aws configure set metadata_service_num_attempts 3
-  - aws configure list
-  - eval $(aws ecr get-login --region us-west-2) 
+  - aws configure list 
+  - eval $(aws ecr get-login --no-include-email --region us-west-2)
   - docker build -t awselasticbean .
   - docker tag awselasticbean:latest 574137776403.dkr.ecr.us-west-2.amazonaws.com/shrigowri:latest
   - docker push 574137776403.dkr.ecr.us-west-2.amazonaws.com/shrigowri:latest
