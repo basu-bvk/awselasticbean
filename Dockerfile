@@ -3,7 +3,7 @@ FROM tomcat:8.0.43-jre8
 
 # Extracting the war started
 ADD . /usr/local/my_app/
-RUN unzip /usr/local/my_app/target/test.war -d /usr/local/tomcat/webapps/test
+RUN unzip /usr/local/my_app/target/testapp.war -d /usr/local/tomcat/webapps/testapp
 RUN rm -rf /usr/local/my_app
 # Extracting the war ended
 
